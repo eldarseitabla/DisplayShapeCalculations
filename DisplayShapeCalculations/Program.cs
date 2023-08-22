@@ -27,22 +27,51 @@ namespace DisplayShapeCalculations
             foreach (var record in listOfRecords)
             {
                 string[] fields = record.Split(';');
-                string shapeType = fields[0];
-                string calcType = fields[1];
+                IShape shape = null;
 
-                if (shapeType == "Rec" && calcType == "A")
+                switch (fields[0])
                 {
-                    var rectangle = new Rectangle { Length = double.Parse(fields[2]), Width = double.Parse(fields[3]) };
-                    Console.WriteLine($"Area of Rectangle: {rectangle.CalculateArea()}");
+                    case "Rec":
+                        shape = new Rectangle { Length = Convert.ToDouble(fields[2]), Width = Convert.ToDouble(fields[3]) };
+                        break;
+                    case "Sq":
+                        shape = new Square { SideLength = Convert.ToDouble(fields[2]) };
+                        break;
+                    case "Cir":
+                        shape = new Circle { Radius = Convert.ToDouble(fields[2]) };
+                        break;
+                    case "Cyl":
+                        shape = new Cylinder { Radius = Convert.ToDouble(fields[2]), Height = Convert.ToDouble(fields[3]) };
+                        break;
+                    default:
+                        Console.WriteLine($"Unknown shape type: {fields[0]}");
+                        continue;
                 }
-                else if (shapeType == "Cir" && calcType == "A")
+
+                switch (fields[1])
                 {
-                    var circle = new Circle { Radius = double.Parse(fields[2]) };
-                    Console.WriteLine($"Area of Circle: {circle.CalculateArea()}");
+                    case "A":
+                        Console.WriteLine($"Area of {fields[0]}: {shape.CalculateArea()}");
+                        break;
+                    case "SA":
+                        Console.WriteLine($"Surface Area of Cylinder: {shape.CalculateArea()}");
+                        break;
+                    case "V":
+                        if (shape is IShapeWithVolume shapeWithVolume)
+                        {
+                            Console.WriteLine($"Volume of {fields[0]}: {shapeWithVolume.CalculateVolume()}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{fields[0]} doesn't support volume calculations.");
+                        }
+                        break;
+                    default:
+                        Console.WriteLine($"Unknown calculation type: {fields[1]}");
+                        break;
                 }
-                else if (shapeType == "")
-                // You can expand this with more shapes and calculations
             }
+            Console.ReadKey();
         }
     }
 }
