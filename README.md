@@ -5,15 +5,15 @@
 * Create a delimited text file - sample records shown below of measurements for different shape calculations. 
 
 Sample Records
-
+```txt
 Rec;SA;10;5;5 
-Sq;SA;10;5 
+Sq;A;10
 Cyl;V;10;5 
 Sq;A;5
 Cir;SA;10;5 
 Rec;A;10;5 
 Cir;A;5
-
+```
   - First field in file represents room shape i.e. Rec = Rectangle 
 
   - Second field represents calculation to return based on values provided i.e. SA = Surface Area, V = Volume & A = Area
